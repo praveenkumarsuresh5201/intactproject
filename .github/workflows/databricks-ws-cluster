@@ -1,0 +1,102 @@
+name: 'Create Databricks Workspace and Cluster'
+
+on:
+  pull_request:
+    paths:
+      - environments/**
+    types: [opened, edited, reopened, synchronize]
+    branches: [develop]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  plan-dev:
+    name: Plan Application Infrastructure for Development Environment
+    uses: Terraform-intactus-IaC/tf-az-us-lob-efnol/.github/workflows/terraform-devops.yaml@develop
+    with:
+      gh_environment: <<tbd>>
+      storage_account_name: <<tbd>>
+      resource_group_name: <<tbd>>
+      container_name: 
+      blob_name: 
+      working_directory: environments
+      tf_vars_file: Dev/dev.tfvars
+      STATE_SUBSCRIPTION_ID: '890102d3-e584-4760-9dcb-4baf2dc07bf5'
+    secrets:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET}}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID}}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      TFPLAN_PAT: ${{ secrets.TFPLAN_PAT }}
+      PAT: ${{ secrets.PAT }}
+      TF_STATE_STORAGE_ACCESS_KEY: ${{ secrets.TF_STATE_STORAGE_ACCESS_KEY }}
+name: 'Create Databricks Workspace and Cluster'
+
+on:
+  pull_request:
+    paths:
+      - environments/**
+    types: [opened, edited, reopened, synchronize]
+    branches: [develop]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  plan-dev:
+    name: Plan Application Infrastructure for Development Environment
+    uses: Terraform-intactus-IaC/tf-az-us-lob-efnol/.github/workflows/terraform-devops.yaml@develop
+    with:
+      gh_environment: <<tbd>>
+      storage_account_name: <<tbd>>
+      resource_group_name: <<tbd>>
+      container_name: 
+      blob_name: 
+      working_directory: environments
+      tf_vars_file: Dev/dev.tfvars
+      STATE_SUBSCRIPTION_ID: '890102d3-e584-4760-9dcb-4baf2dc07bf5'
+    secrets:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET}}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID}}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      TFPLAN_PAT: ${{ secrets.TFPLAN_PAT }}
+      PAT: ${{ secrets.PAT }}
+      TF_STATE_STORAGE_ACCESS_KEY: ${{ secrets.TF_STATE_STORAGE_ACCESS_KEY }}
+name: 'Create Databricks Workspace and Cluster'
+
+on:
+  pull_request:
+    paths:
+      - environments/**
+    types: [opened, edited, reopened, synchronize]
+    branches: [develop]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  plan-dev:
+    name: Plan Application Infrastructure for Development Environment
+    uses: Terraform-intactus-IaC/tf-az-us-lob-efnol/.github/workflows/terraform-devops.yaml@develop
+    with:
+      gh_environment: <<tbd>>
+      storage_account_name: <<tbd>>
+      resource_group_name: <<tbd>>
+      container_name: 
+      blob_name: 
+      working_directory: environments
+      tf_vars_file: Dev/dev.tfvars
+      STATE_SUBSCRIPTION_ID: '890102d3-e584-4760-9dcb-4baf2dc07bf5'
+    secrets:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET}}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID}}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      TFPLAN_PAT: ${{ secrets.TFPLAN_PAT }}
+      PAT: ${{ secrets.PAT }}
+      TF_STATE_STORAGE_ACCESS_KEY: ${{ secrets.TF_STATE_STORAGE_ACCESS_KEY }}
