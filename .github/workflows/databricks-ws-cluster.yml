@@ -1,65 +1,57 @@
-  name: Create Databricks Workspace and Cluster
+name: 'Terraform'
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
   
-  on:
-   pull_request:
-    paths:
-     - environments/**
-    types:
-     - opened
-     - edited
-     - reopened
-     - synchronize
-    branches:
-     - main
-   workflow_dispatch:
-  
-  jobs:
-   plan-dev:
-    name: 'Plan Application Infrastructure for Development Environment'
+jobs:
+  terraform:
+    name: 'Terraform'
+#    env:
+#      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+#      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+#      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
+    environment: dev
+
+    defaults:
+      run:
+        shell: bash
+
     steps:
-     - name: Checkout repository
-       uses: actions/checkout@v2
-  
-     - name: Setup Terraform
-       uses: hashicorp/setup-terraform@v1
-       with:
-        terraform_version: 1.1.0
-  
-     - name: Initialize Terraform
-       run: terraform init
-  
-     - name: Terraform Format
-       run: terraform fmt -check
-  
-     - name: Terraform Validate
-       run: terraform validate
-  
-     - name: Terraform Plan
-       id: terraform-plan
-       run: terraform plan -out=tfplan -var-file=terraform.tfvars
-  
-     - name: Save Terraform Plan
-       run: echo "::set-output name=tfplan::$(cat tfplan)"
-  
-     - name: Create Databricks Workspace and Cluster
-       uses: praveenkumarsuresh5201/intactproject.git
-       with:
-         gh_environment: dev
-         storage_account_name: ""
-         resource_group_name: datasanddlhrg01
-         container_name: ""
-         blob_name: ""
-         working_directory: environments
-         tf_vars_file: terraform.tfvars
-         STATE_SUBSCRIPTION_ID: '31324520-9b0f-447e-98f4-c8ac3667708d'
-         TFPLAN: ${{ steps.terraform-plan.outputs.tfplan }}
-       env:
-         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-         AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-         TFPLAN_PAT: ${{ secrets.TFPLAN_PAT }}
-         PAT: ${{ secrets.PAT }}
-         TF_STATE_STORAGE_ACCESS_KEY: ${{ secrets.TF_STATE_STORAGE_ACCESS_KEY }}
+    - name: Checkout
+      uses: actions/checkout@v2
+        
+    - name: 'Terraform Init'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'init'
+        tf_actions_working_dir: "./environments"
+
+    - name: 'Terraform Validate'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'validate'
+        tf_actions_working_dir: "./environments"
+        
+    - name: 'Terraform Plan'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'plan'
+        tf_actions_working_dir: "./environments"
+
+#    - name: Terraform Apply
+#      uses: hashicorp/terraform-github-actions@master
+#      with:
+#        tf_actions_version: 0.14.8
+#        tf_actions_subcommand: 'apply'
+#        tf_actions_working_dir: "./environments"
