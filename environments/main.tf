@@ -19,3 +19,4 @@ resource "azurerm_databricks_workspace" "this" {
     environment = var.env
   }
 }
+
