@@ -1,5 +1,5 @@
 # Create the Resource Group
-resource "azurerm_resource_group" "this" {
+resource "azurerm_resource_group" "rgname" {
   name     = var.rgname
   location = var.location
 
@@ -9,10 +9,10 @@ resource "azurerm_resource_group" "this" {
 }
 #
 # Create the Databricks Workspace
-resource "azurerm_databricks_workspace" "this" {
+resource "azurerm_databricks_workspace" "wrkspname" {
   name                        = var.wrkspname
-  resource_group_name         = azurerm_resource_group.this.name
-  location                    = azurerm_resource_group.this.location
+  resource_group_name         = azurerm_resource_group.rgname.name
+  location                    = azurerm_resource_group.rgname.location
   sku                         = var.sku
 
   tags = {
