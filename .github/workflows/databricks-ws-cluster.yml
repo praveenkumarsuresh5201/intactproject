@@ -1,34 +1,65 @@
-name: 'Create Databricks Workspace and Cluster'
-
-on:
-  pull_request:
+  name: Create Databricks Workspace and Cluster
+  
+  on:
+   pull_request:
     paths:
-      - environments/**
-    types: [opened, edited, reopened, synchronize]
-    branches: [develop]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-jobs:
-  plan-dev:
-    name: Plan Application Infrastructure for Development Environment
-    uses: Terraform-intactus-IaC/tf-az-us-lob-efnol/.github/workflows/terraform-devops.yaml@develop
-    with:
-      gh_environment: <<tbd>>
-      storage_account_name: <<tbd>>
-      resource_group_name: <<tbd>>
-      container_name: ""
-      blob_name: ""
-      working_directory: environments
-      tf_vars_file: Dev/dev.tfvars
-      STATE_SUBSCRIPTION_ID: '890102d3-e584-4760-9dcb-4baf2dc07bf5'
-    secrets:
-      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET}}
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID}}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-      TFPLAN_PAT: ${{ secrets.TFPLAN_PAT }}
-      PAT: ${{ secrets.PAT }}
-      TF_STATE_STORAGE_ACCESS_KEY: ${{ secrets.TF_STATE_STORAGE_ACCESS_KEY }}
+     - environments/**
+    types:
+     - opened
+     - edited
+     - reopened
+     - synchronize
+    branches:
+     - develop
+   workflow_dispatch:
+  
+  jobs:
+   plan-dev:
+    name: 'Plan Application Infrastructure for Development Environment'
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout repository
+       uses: actions/checkout@v2
+  
+     - name: Setup Terraform
+       uses: hashicorp/setup-terraform@v1
+       with:
+        terraform_version: 1.1.0
+  
+     - name: Initialize Terraform
+       run: terraform init
+  
+     - name: Terraform Format
+       run: terraform fmt -check
+  
+     - name: Terraform Validate
+       run: terraform validate
+  
+     - name: Terraform Plan
+       id: terraform-plan
+       run: terraform plan -out=tfplan -var-file=terraform.tfvars
+  
+     - name: Save Terraform Plan
+       run: echo "::set-output name=tfplan::$(cat tfplan)"
+  
+     - name: Create Databricks Workspace and Cluster
+       uses: terraform-azurerm-databricks/.github/workflows/databricks-dev-ws-cluster.yml@databricks-dev-ws-cluster
+       with:
+         gh_environment: dev
+         storage_account_name: ""
+         resource_group_name: datasanddlhrg01
+         container_name: ""
+         blob_name: ""
+         working_directory: environments
+         tf_vars_file: terraform.tfvars
+         STATE_SUBSCRIPTION_ID: '31324520-9b0f-447e-98f4-c8ac3667708d'
+         TFPLAN: ${{ steps.terraform-plan.outputs.tfplan }}
+       env:
+         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+         AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+         TFPLAN_PAT: ${{ secrets.TFPLAN_PAT }}
+         PAT: ${{ secrets.PAT }}
+         TF_STATE_STORAGE_ACCESS_KEY: ${{ secrets.TF_STATE_STORAGE_ACCESS_KEY }}
