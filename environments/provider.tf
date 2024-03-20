@@ -17,7 +17,7 @@ provider "azurerm" {
  subscription_id = var.aad_subscription_id
 }
 
-provider "databricks" {
- azure_workspace_resource_id = var.azure_workspace_resource_id
- host            = var.host
-}
+# provider "databricks" {
+#  azure_workspace_resource_id = var.azure_workspace_resource_id
+#  host            = var.host
+# }
