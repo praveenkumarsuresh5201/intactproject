@@ -43,7 +43,7 @@
        run: echo "::set-output name=tfplan::$(cat tfplan)"
   
      - name: Create Databricks Workspace and Cluster
-       uses: praveenkumarsuresh5201/intactproject/.github/workflows/databricks-ws-cluster.yml@main
+       uses: praveenkumarsuresh5201/intactproject.git
        with:
          gh_environment: dev
          storage_account_name: ""
