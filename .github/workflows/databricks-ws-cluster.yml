@@ -43,7 +43,7 @@
        run: echo "::set-output name=tfplan::$(cat tfplan)"
   
      - name: Create Databricks Workspace and Cluster
-       uses: terraform-azurerm-databricks/.github/workflows/databricks-dev-ws-cluster.yml@databricks-dev-ws-cluster
+       uses: intactproject.github/workflows/databricks-ws-cluster.yml@
        with:
          gh_environment: dev
          storage_account_name: ""
