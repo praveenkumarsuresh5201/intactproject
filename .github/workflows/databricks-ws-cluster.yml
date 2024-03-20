@@ -10,7 +10,7 @@
      - reopened
      - synchronize
     branches:
-     - develop
+     - main
    workflow_dispatch:
   
   jobs:
@@ -43,7 +43,7 @@
        run: echo "::set-output name=tfplan::$(cat tfplan)"
   
      - name: Create Databricks Workspace and Cluster
-       uses: intactproject.github/workflows/databricks-ws-cluster.yml@
+       uses: intactproject.github/workflows/databricks-ws-cluster.yml@main
        with:
          gh_environment: dev
          storage_account_name: ""
