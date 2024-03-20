@@ -30,6 +30,7 @@ jobs:
         
     - name: 'Terraform Init'
       uses: hashicorp/databricks-ws-cluster-github-actions@main
+
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'init'
