@@ -1,5 +1,4 @@
-### Workspace and Cluster Creation module
-
+## Workspace and Cluster creation
 Terraform code for creating a workspace and cluster in the resource group in a sequential flow.
 
 Usage:
