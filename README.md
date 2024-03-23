@@ -40,8 +40,8 @@ This module deploys to create a workspace and cluster for a resource group in az
 | project                       | string  | Project name for the deployment. This identifies the specific project or initiative for which the resources are being provisioned. |
 | short_region                  | string  | Short region code. This refers to the abbreviated code for the Azure region where the resources will be deployed.            |
 | location                      | string  | Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created.       |
-| sku                           | string  | The Name of the SKU used for this Key Vault. Possible values are standard and premium.                                     |
-| tags                          | map(strings) | Tags to apply on Key Vault resource. Defaults to empty.                                                                 |
+| sku                           | string  | The Name of the SKU used for this workspace and cluster. Possible values are standard and premium.                                     |
+| tags                          | map(strings) | Tags to apply on workspace and cluster resource. Defaults to empty.                                                                 |
 | min_workers                   | number  | Minimum number of workers for the cluster. This sets the minimum number of worker nodes for the Databricks cluster, ensuring a baseline capacity is always available. |
 | max_workers                   | number  | Maximum number of workers for the cluster. This defines the maximum number of worker nodes that can be provisioned in the Databricks cluster, ensuring scalability. |
 | cluster_autotermination_minutes | number | Number of minutes before an idle cluster is terminated. This specifies the duration of inactivity (in minutes) before an idle Databricks cluster is automatically terminated to conserve resources. |
