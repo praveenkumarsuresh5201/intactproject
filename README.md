@@ -1,6 +1,11 @@
 ## Workspace and Cluster creation
 Terraform code for creating a workspace and cluster in the resource group in a sequential flow.
 
+## Physical Architecture
+
+
+![WhatsApp Image 2024-03-23 at 15 02 54_db18a2bc](https://github.com/praveenkumarsuresh5201/intactproject/assets/114279329/fa0a814a-ded4-425e-867e-d5f81581cd5f)
+
 ## Usage:
 
 This module deploys to create a workspace and cluster for a resource group in azure databricks.
