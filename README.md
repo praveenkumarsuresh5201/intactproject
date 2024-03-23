@@ -1,7 +1,8 @@
 ## Workspace and Cluster creation
 Terraform code for creating a workspace and cluster in the resource group in a sequential flow.
 
-Usage:
+## Usage:
+
 This module deploys to create a workspace and cluster for a resource group in azure databricks.
 
 ## Requirements
