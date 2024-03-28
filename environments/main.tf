@@ -8,12 +8,38 @@ resource "azurerm_resource_group" "adb-sand-rg" {
 }
 
 module "adb-adf" {
-  source = "C:/Users/Praveen Kumar/Documents/modules"
+  source = "C:/Users/Praveen Kumar/Documents/modules/datafactory"
 
+  context = var.context
+  env = var.env
+  project = var.project
+  short_region = var.short_region
   rgname       = azurerm_resource_group.adb-sand-rg.name
   location     = azurerm_resource_group.adb-sand-rg.location
-  sku          = "premium"
-  tags         = {
-    environment = "sand"
-  }
+  tags         = var.tags
 }
+
+
+module "storage" {
+  source = "C:/Users/Praveen Kumar/Documents/modules/storage"
+
+
+  context = var.context
+  env = var.env
+  project = var.project
+  short_region = var.short_region
+  rgname               = azurerm_resource_group.adb-sand-rg.name
+  location             = azurerm_resource_group.adb-sand-rg.location
+  tags                 = var.tags
+  # source_file_path     = var.source_file_path
+}
+
+
+
+
+
+
+
+
+
+
